@@ -1,12 +1,33 @@
+import 'dart:convert';
+
 import 'package:fitness_app/colors.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart' as color;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    List info = [];
+
+    _initData() {
+      DefaultAssetBundle.of(context).loadString('json/info.json').then((value) {
+        info = json.decode(value);
+      });
+    }
+
+    @override
+    void initState() {
+      super.initState();
+      _initData();
+    }
+
     return Scaffold(
       backgroundColor: color.AppColor.homePageBackground,
       body: Container(
@@ -257,51 +278,52 @@ class HomePage extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: ((_, i) {
-                    return Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          height: 170,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 3,
-                                offset: const Offset(5, 5),
-                                color: color.AppColor.gradientSecond
-                                    .withOpacity(0.1),
-                              ),
-                              BoxShadow(
-                                blurRadius: 3,
-                                offset: const Offset(-5, -5),
-                                color: color.AppColor.gradientSecond
-                                    .withOpacity(0.1),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                            image: const DecorationImage(
-                              image: AssetImage('assets/ex1.png'),
+                itemCount: 4,
+                itemBuilder: ((_, i) {
+                  return Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        height: 170,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 3,
+                              offset: const Offset(5, 5),
+                              color: color.AppColor.gradientSecond
+                                  .withOpacity(0.1),
                             ),
+                            BoxShadow(
+                              blurRadius: 3,
+                              offset: const Offset(-5, -5),
+                              color: color.AppColor.gradientSecond
+                                  .withOpacity(0.1),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(15),
+                          image: const DecorationImage(
+                            image: AssetImage("img/ex1.png"),
                           ),
-                          child: Center(
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                'glues',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: color.AppColor.homePageDetail,
-                                ),
+                        ),
+                        child: Center(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              'gliues',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: color.AppColor.homePageDetail,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    );
-                  })),
+                      ),
+                    ],
+                  );
+                }),
+              ),
             ),
           ],
         ),
